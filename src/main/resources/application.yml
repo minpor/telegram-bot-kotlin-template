@@ -1,0 +1,8 @@
+bot:
+  username: kotlin_template_bot
+  token: 2047994014:AAExhThxdFk2xVMgeHd2rgkR_mDxTlRJqO8
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/kotlin_template
+    username: postgres
+    password: postgres
