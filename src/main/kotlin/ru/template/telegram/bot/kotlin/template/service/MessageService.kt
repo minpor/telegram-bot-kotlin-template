@@ -30,8 +30,7 @@ class MessageService(
 
     fun sendMessageToBot(
         chatId: Long,
-        stepCode: StepCode,
-        messageId: Int? = null
+        stepCode: StepCode
     ) {
         when (stepCode.type) {
             SIMPLE_TEXT -> telegramSender.execute(simpleTextMessage(chatId))

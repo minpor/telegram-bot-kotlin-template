@@ -41,7 +41,7 @@ class ApplicationListener(
         @EventListener
         fun onApplicationEvent(event: TelegramStepMessageEvent) {
             usersRepository.updateUserStep(event.chatId, event.stepCode)
-            messageService.sendMessageToBot(event.chatId, event.stepCode, event.editMessageId)
+            messageService.sendMessageToBot(event.chatId, event.stepCode)
         }
     }
 
@@ -58,8 +58,7 @@ class ApplicationListener(
                 stepMessageBean().onApplicationEvent(
                     TelegramStepMessageEvent(
                         chatId = event.chatId,
-                        stepCode = nextStepCode,
-                        editMessageId = if (nextStepCode == event.stepCode) event.callback.message.messageId else null
+                        stepCode = nextStepCode
                     )
                 )
             }

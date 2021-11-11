@@ -1,6 +1,6 @@
 bot:
   username: kotlin_template_bot
-  token: your bot token here
+  token: [your bot token here]
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/kotlin_template
