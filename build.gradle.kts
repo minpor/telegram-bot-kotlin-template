@@ -121,7 +121,6 @@ jooq {
                     }
                     target.apply {
                         packageName = "ru.template.telegram.bot.kotlin.template.domain"
-                        directory = "src/main/java"
                     }
                     strategy.name = "org.jooq.codegen.DefaultGeneratorStrategy"
                 }
