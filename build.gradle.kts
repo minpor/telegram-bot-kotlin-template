@@ -56,6 +56,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
 
     implementation("org.telegram:telegrambots-springboot-longpolling-starter:$telegramBotVersion")
+    implementation("org.telegram:telegrambots-extensions:$telegramBotVersion")
     implementation("org.telegram:telegrambots-client:$telegramBotVersion")
 
 
