@@ -2,21 +2,20 @@ package ru.template.telegram.bot.kotlin.template.repository
 
 import org.jooq.DSLContext
 import org.springframework.stereotype.Repository
-import ru.template.telegram.bot.kotlin.template.domain.Tables
 import ru.template.telegram.bot.kotlin.template.domain.tables.pojos.Users
+import ru.template.telegram.bot.kotlin.template.domain.tables.references.USERS
 import ru.template.telegram.bot.kotlin.template.enums.StepCode
 
 @Repository
 class UsersRepository(private val dslContext: DSLContext) {
 
-    private val users = Tables.USERS
 
     fun isUserExist(chatId: Long): Boolean {
-        return dslContext.selectCount().from(users).where(users.ID.eq(chatId)).fetchOneInto(Int::class.java) == 1
+        return dslContext.selectCount().from(USERS).where(USERS.ID.eq(chatId)).fetchOneInto(Int::class.java) == 1
     }
 
     fun createUser(chatId: Long): Users {
-        val record = dslContext.newRecord(users, Users().apply {
+        val record = dslContext.newRecord(USERS, Users().apply {
             id = chatId
             stepCode = StepCode.START.toString()
         })
@@ -25,22 +24,22 @@ class UsersRepository(private val dslContext: DSLContext) {
     }
 
     fun getUser(chatId: Long) =
-        dslContext.selectFrom(users).where(users.ID.eq(chatId)).fetchOneInto(Users::class.java)
+        dslContext.selectFrom(USERS).where(USERS.ID.eq(chatId)).fetchOneInto(Users::class.java)
 
     fun updateUserStep(chatId: Long, stepCode: StepCode): Users =
-        dslContext.update(users)
-            .set(users.STEP_CODE, stepCode.toString())
-            .where(users.ID.eq(chatId)).returning().fetchOne()!!.into(Users::class.java)
+        dslContext.update(USERS)
+            .set(USERS.STEP_CODE, stepCode.toString())
+            .where(USERS.ID.eq(chatId)).returning().fetchOne()!!.into(Users::class.java)
 
     fun updateText(chatId: Long, text: String) {
-        dslContext.update(users)
-            .set(users.TEXT, text)
-            .where(users.ID.eq(chatId)).execute()
+        dslContext.update(USERS)
+            .set(USERS.TEXT, text)
+            .where(USERS.ID.eq(chatId)).execute()
     }
 
     fun updateAccept(chatId: Long, accept: String) {
-        dslContext.update(users)
-            .set(users.ACCEPT, accept)
-            .where(users.ID.eq(chatId)).execute()
+        dslContext.update(USERS)
+            .set(USERS.ACCEPT, accept)
+            .where(USERS.ID.eq(chatId)).execute()
     }
 }

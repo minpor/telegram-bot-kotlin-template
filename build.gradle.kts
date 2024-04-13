@@ -2,21 +2,21 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import nu.studer.gradle.jooq.JooqEdition
 import nu.studer.gradle.jooq.JooqGenerate
 
-val postgresVersion = "42.3.1"
-val telegramBotVersion = "5.3.0"
+val postgresVersion = "42.7.0"
+val telegramBotVersion = "7.2.1"
 
 plugins {
-    id("nu.studer.jooq") version("6.0.1")
-    id("org.flywaydb.flyway") version("7.7.0")
-    id("org.springframework.boot") version "2.5.6"
-    id("io.spring.dependency-management") version "1.0.11.RELEASE"
-    kotlin("jvm") version "1.5.31"
-    kotlin("plugin.spring") version "1.5.31"
+    id("nu.studer.jooq") version("8.2.1")
+    id("org.flywaydb.flyway") version("9.22.3")
+    id("org.springframework.boot") version "3.2.4"
+    id("io.spring.dependency-management") version "1.1.4"
+    kotlin("jvm") version "1.9.23"
+    kotlin("plugin.spring") version "1.9.23"
 }
 
 group = "ru.template.telegram.bot.kotlin"
-version = "0.0.1-SNAPSHOT"
-java.sourceCompatibility = JavaVersion.VERSION_11
+version = "1.0.0"
+java.sourceCompatibility = JavaVersion.VERSION_17
 
 repositories {
     mavenCentral()
@@ -32,7 +32,7 @@ tasks.clean {
     delete("src/main/java")
 }
 
-extra["springCloudVersion"] = "2020.0.4"
+extra["springCloudVersion"] = "2023.0.1"
 
 val flywayMigration = configurations.create("flywayMigration")
 
@@ -55,9 +55,9 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-freemarker")
     implementation("org.springframework.boot:spring-boot-starter-web")
 
-    implementation("org.telegram:telegrambots:$telegramBotVersion")
-    implementation("org.telegram:telegrambotsextensions:$telegramBotVersion")
-    implementation("org.telegram:telegrambots-spring-boot-starter:$telegramBotVersion")
+    implementation("org.telegram:telegrambots-springboot-longpolling-starter:$telegramBotVersion")
+    implementation("org.telegram:telegrambots-client:$telegramBotVersion")
+
 
     compileOnly("org.springframework.boot:spring-boot-configuration-processor")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
@@ -76,7 +76,7 @@ dependencyManagement {
 tasks.withType<KotlinCompile> {
     kotlinOptions {
         freeCompilerArgs = listOf("-Xjsr305=strict")
-        jvmTarget = "11"
+        jvmTarget = "17"
     }
 }
 
@@ -97,7 +97,7 @@ jooq {
                     password = flyway.password
                 }
                 generator.apply {
-                    name = "org.jooq.codegen.DefaultGenerator"
+                    name = "org.jooq.codegen.KotlinGenerator"
                     generate.apply {
                         isDeprecated = false
                         isRecords = true
@@ -107,7 +107,6 @@ jooq {
                         isSerializablePojos = true
                         isVarargSetters = false
                         isPojos = true
-                        isNonnullAnnotation = true
                         isUdts = false
                         isRoutines = false
                         isIndexes = false

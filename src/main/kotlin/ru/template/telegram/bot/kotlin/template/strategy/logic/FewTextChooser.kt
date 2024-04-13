@@ -1,7 +1,7 @@
 package ru.template.telegram.bot.kotlin.template.strategy.logic
 
 import org.springframework.stereotype.Component
-import org.telegram.telegrambots.meta.api.objects.Message
+import org.telegram.telegrambots.meta.api.objects.message.Message
 import ru.template.telegram.bot.kotlin.template.enums.StepCode
 import ru.template.telegram.bot.kotlin.template.repository.UsersRepository
 

@@ -2,7 +2,8 @@ package ru.template.telegram.bot.kotlin.template.strategy
 
 import org.springframework.stereotype.Component
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery
-import org.telegram.telegrambots.meta.api.objects.Message
+import org.telegram.telegrambots.meta.api.objects.MessageEntity
+import org.telegram.telegrambots.meta.api.objects.message.Message
 import ru.template.telegram.bot.kotlin.template.enums.ExecuteStatus
 import ru.template.telegram.bot.kotlin.template.strategy.logic.CallbackChooser
 import ru.template.telegram.bot.kotlin.template.strategy.logic.Chooser
