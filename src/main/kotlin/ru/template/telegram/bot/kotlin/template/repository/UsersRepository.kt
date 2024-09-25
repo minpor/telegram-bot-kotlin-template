@@ -15,10 +15,10 @@ class UsersRepository(private val dslContext: DSLContext) {
     }
 
     fun createUser(chatId: Long): Users {
-        val record = dslContext.newRecord(USERS, Users().apply {
-            id = chatId
+        val record = dslContext.newRecord(USERS, Users(
+            id = chatId,
             stepCode = StepCode.START.toString()
-        })
+        ))
         record.store()
         return record.into(Users::class.java)
     }

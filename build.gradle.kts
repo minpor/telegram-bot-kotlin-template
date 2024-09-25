@@ -1,22 +1,26 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import nu.studer.gradle.jooq.JooqEdition
 import nu.studer.gradle.jooq.JooqGenerate
 
-val postgresVersion = "42.7.0"
-val telegramBotVersion = "7.2.1"
+val postgresVersion = "42.7.2"
+val telegramBotVersion = "7.10.0"
 
 plugins {
-    id("nu.studer.jooq") version("8.2.1")
+    id("nu.studer.jooq") version("9.0")
     id("org.flywaydb.flyway") version("9.22.3")
-    id("org.springframework.boot") version "3.2.4"
-    id("io.spring.dependency-management") version "1.1.4"
+    id("org.springframework.boot") version "3.3.2"
+    id("io.spring.dependency-management") version "1.1.6"
     kotlin("jvm") version "1.9.23"
     kotlin("plugin.spring") version "1.9.23"
 }
 
 group = "ru.template.telegram.bot.kotlin"
 version = "1.0.0"
-java.sourceCompatibility = JavaVersion.VERSION_17
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17) // gradle 8.8
+    }
+}
 
 repositories {
     mavenCentral()
@@ -32,7 +36,7 @@ tasks.clean {
     delete("src/main/java")
 }
 
-extra["springCloudVersion"] = "2023.0.1"
+extra["springCloudVersion"] = "2023.0.3"
 
 val flywayMigration = configurations.create("flywayMigration")
 
@@ -74,13 +78,6 @@ dependencyManagement {
     }
 }
 
-tasks.withType<KotlinCompile> {
-    kotlinOptions {
-        freeCompilerArgs = listOf("-Xjsr305=strict")
-        jvmTarget = "17"
-    }
-}
-
 tasks.withType<Test> {
     useJUnitPlatform()
 }
@@ -100,19 +97,18 @@ jooq {
                 generator.apply {
                     name = "org.jooq.codegen.KotlinGenerator"
                     generate.apply {
-                        isDeprecated = false
-                        isRecords = true
-                        isImmutablePojos = false
-                        isFluentSetters = false
-                        isJavaBeansGettersAndSetters = false
-                        isSerializablePojos = true
-                        isVarargSetters = false
-                        isPojos = true
-                        isUdts = false
-                        isRoutines = false
-                        isIndexes = false
-                        isRelations = true
-                        isPojosEqualsAndHashCode = true
+                        withPojos(true)
+                        withDeprecated(false)
+                        withRelations(true)
+                        withRecords(true)
+                        withPojosEqualsAndHashCode(true)
+                        withFluentSetters(true)
+                        withJavaTimeTypes(true)
+                        withKotlinSetterJvmNameAnnotationsOnIsPrefix(true)
+                        withPojosAsKotlinDataClasses(true)
+                        withKotlinNotNullPojoAttributes(true)
+                        withKotlinNotNullInterfaceAttributes(true)
+                        withKotlinNotNullRecordAttributes(true)
                     }
                     database.apply {
                         name = "org.jooq.meta.postgres.PostgresDatabase"
