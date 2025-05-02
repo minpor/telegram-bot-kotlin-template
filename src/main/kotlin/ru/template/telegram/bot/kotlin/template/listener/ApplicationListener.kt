@@ -24,7 +24,7 @@ class ApplicationListener(
     inner class Message {
         @EventListener
         fun onApplicationEvent(event: TelegramReceivedMessageEvent) {
-            logicContext.execute(chatId = event.chatId, message = event.message)
+            logicContext.execute(chatId = event.chatId, message = event.message, stepCode = event.stepCode)
             val nextStepCode = nextStepContext.next(event.chatId, event.stepCode)
             if (nextStepCode != null) {
                 stepMessageBean().onApplicationEvent(
@@ -48,7 +48,7 @@ class ApplicationListener(
     inner class CallbackMessage {
         @EventListener
         fun onApplicationEvent(event: TelegramReceivedCallbackEvent) {
-            val nextStepCode = when (logicContext.execute(event.chatId, event.callback)) {
+            val nextStepCode = when (logicContext.execute(event.chatId, event.callback, event.stepCode)) {
                 ExecuteStatus.FINAL -> {
                     nextStepContext.next(event.chatId, event.stepCode)
                 }

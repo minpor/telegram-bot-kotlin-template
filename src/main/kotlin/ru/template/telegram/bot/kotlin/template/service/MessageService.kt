@@ -32,8 +32,8 @@ class MessageService(
         stepCode: StepCode
     ) {
         when (stepCode.type) {
-            SIMPLE_TEXT -> telegramClient.execute(simpleTextMessage(chatId))
-            INLINE_KEYBOARD_MARKUP -> telegramClient.sendInlineKeyboardMarkup(chatId)
+            SIMPLE_TEXT -> telegramClient.execute(simpleTextMessage(chatId, stepCode))
+            INLINE_KEYBOARD_MARKUP -> telegramClient.sendInlineKeyboardMarkup(chatId, stepCode)
         }
 
         if (!stepCode.botPause) {
@@ -47,8 +47,8 @@ class MessageService(
     }
 
 
-    private fun simpleTextMessage(chatId: Long): SendMessage {
-        val sendMessage = SendMessage(chatId.toString(),  messageContext.getMessage(chatId))
+    private fun simpleTextMessage(chatId: Long, stepCode: StepCode): SendMessage {
+        val sendMessage = SendMessage(chatId.toString(),  messageContext.getMessage(chatId, stepCode))
         sendMessage.enableHtml(true)
 
         val replyKeyboardRemove = ReplyKeyboardRemove(true)
@@ -57,11 +57,11 @@ class MessageService(
         return sendMessage
     }
 
-    private fun TelegramClient.sendInlineKeyboardMarkup(chatId: Long) {
+    private fun TelegramClient.sendInlineKeyboardMarkup(chatId: Long, stepCode: StepCode) {
         val inlineKeyboardMarkup: InlineKeyboardMarkup
         val messageText: String
 
-        val inlineKeyboardMarkupDto = markupContext.getInlineKeyboardMarkupDto(chatId)!!
+        val inlineKeyboardMarkupDto = markupContext.getInlineKeyboardMarkupDto(chatId, stepCode)!!
         messageText = inlineKeyboardMarkupDto.message
         inlineKeyboardMarkup = inlineKeyboardMarkupDto.inlineButtons.getInlineKeyboardMarkup()
 

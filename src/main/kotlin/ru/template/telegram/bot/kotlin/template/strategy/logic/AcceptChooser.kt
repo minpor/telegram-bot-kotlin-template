@@ -14,8 +14,8 @@ class AcceptChooser(private val usersRepository: UsersRepository) : CallbackChoo
         return ExecuteStatus.FINAL
     }
 
-    override fun isAvailableForCurrentStep(chatId: Long): Boolean {
-        return usersRepository.getUser(chatId)!!.stepCode == StepCode.BUTTON_REQUEST.toString()
+    override fun isAvailableForCurrentStep(stepCode: StepCode): Boolean {
+        return stepCode == StepCode.BUTTON_REQUEST
     }
 
     override fun isPermitted(chatId: Long): Boolean {

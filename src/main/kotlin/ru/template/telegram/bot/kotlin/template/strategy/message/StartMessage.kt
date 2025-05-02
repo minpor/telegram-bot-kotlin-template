@@ -7,12 +7,11 @@ import ru.template.telegram.bot.kotlin.template.repository.UsersRepository
 
 @Component
 class StartMessage(
-    private val usersRepository: UsersRepository,
     private val messageWriter: MessageWriter
 ) : Message {
 
-    override fun isAvailableForCurrentStep(chatId: Long): Boolean {
-        return usersRepository.getUser(chatId)!!.stepCode == StepCode.START.toString()
+    override fun isAvailableForCurrentStep(stepCode: StepCode): Boolean {
+        return stepCode == StepCode.START
     }
 
     override fun getMessage(chatId: Long): String {

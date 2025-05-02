@@ -3,7 +3,6 @@ package ru.template.telegram.bot.kotlin.template.strategy.message
 import org.springframework.stereotype.Component
 import ru.template.telegram.bot.kotlin.template.component.MessageWriter
 import ru.template.telegram.bot.kotlin.template.dto.ButtonResponseDto
-import ru.template.telegram.bot.kotlin.template.dto.UserInfoDto
 import ru.template.telegram.bot.kotlin.template.enums.StepCode
 import ru.template.telegram.bot.kotlin.template.repository.UsersRepository
 
@@ -13,8 +12,8 @@ class ButtonResponseMessage(
     private val messageWriter: MessageWriter
 ) : Message {
 
-    override fun isAvailableForCurrentStep(chatId: Long): Boolean {
-        return usersRepository.getUser(chatId)!!.stepCode == StepCode.BUTTON_RESPONSE.toString()
+    override fun isAvailableForCurrentStep(stepCode: StepCode): Boolean {
+        return stepCode == StepCode.BUTTON_RESPONSE
     }
 
     override fun getMessage(chatId: Long): String {

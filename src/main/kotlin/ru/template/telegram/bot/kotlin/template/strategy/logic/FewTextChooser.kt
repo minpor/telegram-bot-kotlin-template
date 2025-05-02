@@ -8,8 +8,8 @@ import ru.template.telegram.bot.kotlin.template.repository.UsersRepository
 @Component
 class FewTextChooser(private val usersRepository: UsersRepository) : MessageChooser {
 
-    override fun isAvailableForCurrentStep(chatId: Long): Boolean {
-        return usersRepository.getUser(chatId)!!.stepCode == StepCode.USER_INFO.toString()
+    override fun isAvailableForCurrentStep(stepCode: StepCode): Boolean {
+        return stepCode == StepCode.USER_INFO
     }
 
     override fun isPermitted(chatId: Long): Boolean {

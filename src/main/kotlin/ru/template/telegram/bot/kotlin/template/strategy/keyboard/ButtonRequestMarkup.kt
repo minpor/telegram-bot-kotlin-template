@@ -6,16 +6,14 @@ import ru.template.telegram.bot.kotlin.template.dto.MarkupDataDto
 import ru.template.telegram.bot.kotlin.template.dto.markup.ButtonRequestDto
 import ru.template.telegram.bot.kotlin.template.dto.markup.DataModel
 import ru.template.telegram.bot.kotlin.template.enums.StepCode
-import ru.template.telegram.bot.kotlin.template.repository.UsersRepository
 
 @Component
 class ButtonRequestMarkup<T : DataModel>(
-    private val usersRepository: UsersRepository,
     private val messageWriter: MessageWriter,
 ) : InlineKeyboardMarkup<ButtonRequestDto> {
 
-    override fun isAvailableForCurrentStep(chatId: Long): Boolean {
-        return usersRepository.getUser(chatId)!!.stepCode == StepCode.BUTTON_REQUEST.toString()
+    override fun isAvailableForCurrentStep(stepCode: StepCode): Boolean {
+        return stepCode == StepCode.BUTTON_REQUEST
     }
 
     override fun message(chatId: Long, data: ButtonRequestDto?): String {
