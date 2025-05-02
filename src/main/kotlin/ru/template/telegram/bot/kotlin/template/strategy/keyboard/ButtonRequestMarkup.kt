@@ -12,10 +12,6 @@ class ButtonRequestMarkup<T : DataModel>(
     private val messageWriter: MessageWriter,
 ) : InlineKeyboardMarkup<ButtonRequestDto> {
 
-    override fun isAvailableForCurrentStep(stepCode: StepCode): Boolean {
-        return stepCode == StepCode.BUTTON_REQUEST
-    }
-
     override fun message(chatId: Long, data: ButtonRequestDto?): String {
         if (data == null) {
             throw IllegalStateException("Not Yet Supported")

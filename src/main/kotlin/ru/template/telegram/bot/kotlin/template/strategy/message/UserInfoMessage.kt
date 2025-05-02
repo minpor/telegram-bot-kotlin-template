@@ -10,10 +10,6 @@ class UserInfoMessage(
     private val messageWriter: MessageWriter
 ) : Message {
 
-    override fun isAvailableForCurrentStep(stepCode: StepCode): Boolean {
-        return stepCode == StepCode.USER_INFO
-    }
-
     override fun getMessage(chatId: Long): String {
         return messageWriter.process(StepCode.USER_INFO, UserInfoDto(chatId))
     }

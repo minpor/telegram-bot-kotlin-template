@@ -10,10 +10,6 @@ class StartMessage(
     private val messageWriter: MessageWriter
 ) : Message {
 
-    override fun isAvailableForCurrentStep(stepCode: StepCode): Boolean {
-        return stepCode == StepCode.START
-    }
-
     override fun getMessage(chatId: Long): String {
         return messageWriter.process(StepCode.START)
     }

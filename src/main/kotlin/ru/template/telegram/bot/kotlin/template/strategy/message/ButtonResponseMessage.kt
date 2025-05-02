@@ -12,10 +12,6 @@ class ButtonResponseMessage(
     private val messageWriter: MessageWriter
 ) : Message {
 
-    override fun isAvailableForCurrentStep(stepCode: StepCode): Boolean {
-        return stepCode == StepCode.BUTTON_RESPONSE
-    }
-
     override fun getMessage(chatId: Long): String {
         val user = usersRepository.getUser(chatId)
         return messageWriter.process(
