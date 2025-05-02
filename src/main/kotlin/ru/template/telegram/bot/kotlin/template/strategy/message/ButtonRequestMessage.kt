@@ -1,4 +1,4 @@
-package ru.template.telegram.bot.kotlin.template.strategy.keyboard
+package ru.template.telegram.bot.kotlin.template.strategy.message
 
 import org.springframework.stereotype.Component
 import ru.template.telegram.bot.kotlin.template.component.MessageWriter
@@ -8,14 +8,12 @@ import ru.template.telegram.bot.kotlin.template.dto.markup.DataModel
 import ru.template.telegram.bot.kotlin.template.enums.StepCode
 
 @Component
-class ButtonRequestMarkup<T : DataModel>(
-    private val messageWriter: MessageWriter,
-) : InlineKeyboardMarkup<ButtonRequestDto> {
+class ButtonRequestMessage<T : DataModel>(
+    private val messageWriter: MessageWriter
+) : Button<ButtonRequestDto> {
 
     override fun message(chatId: Long, data: ButtonRequestDto?): String {
-        if (data == null) {
-            throw IllegalStateException("Not Yet Supported")
-        }
+        check(data != null) { throw IllegalStateException("Not Yet Supported") }
 
         return messageWriter.process(StepCode.BUTTON_REQUEST)
     }

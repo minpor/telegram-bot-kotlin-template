@@ -14,16 +14,14 @@ import ru.template.telegram.bot.kotlin.template.dto.markup.DataModel
 import ru.template.telegram.bot.kotlin.template.enums.StepCode
 import ru.template.telegram.bot.kotlin.template.enums.StepType.*
 import ru.template.telegram.bot.kotlin.template.event.TelegramStepMessageEvent
-import ru.template.telegram.bot.kotlin.template.strategy.MarkupContext
 import ru.template.telegram.bot.kotlin.template.strategy.MessageContext
 import ru.template.telegram.bot.kotlin.template.strategy.NextStepContext
 
 @Service
 class MessageService(
     private val telegramClient: TelegramClient,
-    private val messageContext: MessageContext,
+    private val messageContext: MessageContext<DataModel>,
     private val applicationEventPublisher: ApplicationEventPublisher,
-    private val markupContext: MarkupContext<DataModel>,
     private val nextStepContext: NextStepContext
 ) {
 
@@ -61,7 +59,7 @@ class MessageService(
         val inlineKeyboardMarkup: InlineKeyboardMarkup
         val messageText: String
 
-        val inlineKeyboardMarkupDto = markupContext.getInlineKeyboardMarkupDto(chatId, stepCode)!!
+        val inlineKeyboardMarkupDto = messageContext.getInlineKeyboardMarkupDto(chatId, stepCode)!!
         messageText = inlineKeyboardMarkupDto.message
         inlineKeyboardMarkup = inlineKeyboardMarkupDto.inlineButtons.getInlineKeyboardMarkup()
 
