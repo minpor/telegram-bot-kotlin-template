@@ -5,8 +5,8 @@ Please, generate your telegram bot name before use. And change properties bot.us
 
 ```yml
 bot:
-  username: // write your username
-  token: // write your token
+  username: // write your bot username
+  token: // write your bot token
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/kotlin_template
@@ -14,7 +14,7 @@ spring:
     password: postgres
 ```
 
-Before use this example bot try to create database and do command
+Before use this example bot try to create database and run command
 
 ```bash
 /gradelw flywayMigrate

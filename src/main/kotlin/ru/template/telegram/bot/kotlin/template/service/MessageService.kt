@@ -15,14 +15,14 @@ import ru.template.telegram.bot.kotlin.template.enums.StepCode
 import ru.template.telegram.bot.kotlin.template.enums.StepType.*
 import ru.template.telegram.bot.kotlin.template.event.TelegramStepMessageEvent
 import ru.template.telegram.bot.kotlin.template.strategy.MessageContext
-import ru.template.telegram.bot.kotlin.template.strategy.NextStepContext
+import ru.template.telegram.bot.kotlin.template.strategy.StepContext
 
 @Service
 class MessageService(
     private val telegramClient: TelegramClient,
     private val messageContext: MessageContext<DataModel>,
     private val applicationEventPublisher: ApplicationEventPublisher,
-    private val nextStepContext: NextStepContext
+    private val stepContext: StepContext
 ) {
 
     fun sendMessageToBot(
@@ -38,7 +38,7 @@ class MessageService(
             applicationEventPublisher.publishEvent(
                 TelegramStepMessageEvent(
                     chatId = chatId,
-                    stepCode = nextStepContext.next(chatId, stepCode)!!
+                    stepCode = stepContext.next(chatId, stepCode)!!
                 )
             )
         }

@@ -4,8 +4,7 @@ import org.springframework.stereotype.Component
 import ru.template.telegram.bot.kotlin.template.enums.StepCode
 
 @Component
-class ButtonRequestStep : ChooseNextStep {
-
+class ButtonRequestStep : Step {
 
     override fun getNextStep(chatId: Long): StepCode {
         return StepCode.BUTTON_RESPONSE

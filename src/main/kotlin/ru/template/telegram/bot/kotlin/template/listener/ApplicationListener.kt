@@ -11,12 +11,12 @@ import ru.template.telegram.bot.kotlin.template.event.TelegramStepMessageEvent
 import ru.template.telegram.bot.kotlin.template.repository.UsersRepository
 import ru.template.telegram.bot.kotlin.template.service.MessageService
 import ru.template.telegram.bot.kotlin.template.strategy.LogicContext
-import ru.template.telegram.bot.kotlin.template.strategy.NextStepContext
+import ru.template.telegram.bot.kotlin.template.strategy.StepContext
 
 @Component
 class ApplicationListener(
     private val logicContext: LogicContext,
-    private val nextStepContext: NextStepContext,
+    private val stepContext: StepContext,
     private val usersRepository: UsersRepository,
     private val messageService: MessageService
 ) {
@@ -25,7 +25,7 @@ class ApplicationListener(
         @EventListener
         fun onApplicationEvent(event: TelegramReceivedMessageEvent) {
             logicContext.execute(chatId = event.chatId, message = event.message, stepCode = event.stepCode)
-            val nextStepCode = nextStepContext.next(event.chatId, event.stepCode)
+            val nextStepCode = stepContext.next(event.chatId, event.stepCode)
             if (nextStepCode != null) {
                 stepMessageBean().onApplicationEvent(
                     TelegramStepMessageEvent(
@@ -50,7 +50,7 @@ class ApplicationListener(
         fun onApplicationEvent(event: TelegramReceivedCallbackEvent) {
             val nextStepCode = when (logicContext.execute(event.chatId, event.callback, event.stepCode)) {
                 ExecuteStatus.FINAL -> {
-                    nextStepContext.next(event.chatId, event.stepCode)
+                    stepContext.next(event.chatId, event.stepCode)
                 }
                 ExecuteStatus.NOTHING -> throw IllegalStateException("Не поддерживается")
             }
