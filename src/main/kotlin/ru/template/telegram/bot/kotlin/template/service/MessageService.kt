@@ -78,14 +78,18 @@ class MessageService(
 
     private fun List<MarkupDataDto>.getInlineKeyboardMarkup(): InlineKeyboardMarkup {
 
-        val inlineKeyboardButtonsInner: MutableList<InlineKeyboardButton> = mutableListOf()
+        var inlineKeyboardButtonsInner: MutableList<InlineKeyboardButton>
         val inlineKeyboardButtons: MutableList<MutableList<InlineKeyboardButton>> = mutableListOf()
-        this.sortedBy { it.rowPos }.forEach { markupDataDto ->
-            val button = InlineKeyboardButton(markupDataDto.text)
-            button.callbackData = markupDataDto.text
-            inlineKeyboardButtonsInner.add(button)
+
+        this.groupBy { it.rowPos }.toSortedMap().forEach { entry: Map.Entry<Int, List<MarkupDataDto>> ->
+            inlineKeyboardButtonsInner = mutableListOf()
+            entry.value.forEach { markup: MarkupDataDto ->
+                val button = InlineKeyboardButton(markup.text)
+                button.callbackData = markup.text
+                inlineKeyboardButtonsInner.add(button)
+            }
+            inlineKeyboardButtons.add(inlineKeyboardButtonsInner.toMutableList())
         }
-        inlineKeyboardButtons.add(inlineKeyboardButtonsInner)
         val rows = inlineKeyboardButtons.map { InlineKeyboardRow(it) }
         return InlineKeyboardMarkup(rows)
     }

@@ -24,7 +24,12 @@ class ButtonRequestMessage<T : DataModel>(
 
     override fun inlineButtons(chatId: Long, data: ButtonRequestDto?): List<MarkupDataDto> {
         val accept = data!!.accept
-        return listOf(MarkupDataDto(0, accept.first()), MarkupDataDto(1, accept.last()))
+        return listOf(
+            MarkupDataDto(0, accept.first()),
+            MarkupDataDto(0, accept.first()),
+            MarkupDataDto(1, accept.last()),
+            MarkupDataDto(1, accept.last())
+        )
     }
 
     override fun getData(chatId: Long): ButtonRequestDto {
