@@ -16,8 +16,9 @@ class MessageContext<T : DataModel>(
     fun getMessage(chatId: Long, stepCode: StepCode): String {
         return message
             .filter { it.isAvailableForCurrentStep(stepCode) }
+            .filter { it.isPermitted(chatId) }
             .map { it.message(chatId) }
-            .first()
+            .firstOrNull() ?: "Доступ запрещён"
     }
 
     fun getInlineKeyboardMarkupDto(
@@ -25,6 +26,7 @@ class MessageContext<T : DataModel>(
         stepCode: StepCode
     ): InlineKeyboardMarkupDto? {
         return button
+            .filter { it.isPermitted(chatId) }
             .firstOrNull { it.isAvailableForCurrentStep(stepCode) }
             ?.let {
                 val data = it.getData(chatId)

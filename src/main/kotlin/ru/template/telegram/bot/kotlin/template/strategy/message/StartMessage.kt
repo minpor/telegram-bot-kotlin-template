@@ -14,4 +14,8 @@ class StartMessage(
     override fun message(chatId: Long, data: DataModel?): String {
         return messageWriter.process(StepCode.START)
     }
+
+    override fun isPermitted(chatId: Long): Boolean {
+        return true
+    }
 }

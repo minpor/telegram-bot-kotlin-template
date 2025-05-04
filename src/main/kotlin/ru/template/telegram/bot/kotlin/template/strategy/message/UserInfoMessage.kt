@@ -14,4 +14,8 @@ class UserInfoMessage(
     override fun message(chatId: Long, data: DataModel?): String {
         return messageWriter.process(StepCode.USER_INFO, UserInfoDto(chatId))
     }
+
+    override fun isPermitted(chatId: Long): Boolean {
+        return true
+    }
 }

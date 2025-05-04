@@ -18,6 +18,10 @@ class ButtonRequestMessage<T : DataModel>(
         return messageWriter.process(StepCode.BUTTON_REQUEST)
     }
 
+    override fun isPermitted(chatId: Long): Boolean {
+        return true
+    }
+
     override fun inlineButtons(chatId: Long, data: ButtonRequestDto?): List<MarkupDataDto> {
         val accept = data!!.accept
         return listOf(MarkupDataDto(0, accept.first()), MarkupDataDto(1, accept.last()))

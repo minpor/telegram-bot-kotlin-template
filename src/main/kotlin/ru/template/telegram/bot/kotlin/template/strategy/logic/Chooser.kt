@@ -9,6 +9,4 @@ interface Chooser {
         return this.checkCurrentStep(stepCode, "Chooser")
     }
 
-    fun isPermitted(chatId: Long): Boolean
-
 }

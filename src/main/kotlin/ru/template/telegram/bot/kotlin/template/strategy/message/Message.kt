@@ -11,4 +11,6 @@ interface Message<T: DataModel?> {
     }
 
     fun message(chatId: Long, data: T? = null): String
+
+    fun isPermitted(chatId: Long): Boolean
 }

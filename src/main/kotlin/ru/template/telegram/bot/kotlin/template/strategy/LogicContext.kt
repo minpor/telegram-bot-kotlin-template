@@ -13,8 +13,8 @@ import ru.template.telegram.bot.kotlin.template.strategy.logic.MessageChooser
 class LogicContext(private val chooser: List<Chooser>) {
 
     fun execute(chatId: Long, message: Message, stepCode: StepCode) {
-        chooser.filter { it.isAvailableForCurrentStep(stepCode) }
-            .filter { it.isPermitted(chatId) }
+        chooser
+            .filter { it.isAvailableForCurrentStep(stepCode) }
             .forEach {
                 (it as MessageChooser).execute(chatId = chatId, message = message)
             }
@@ -23,7 +23,6 @@ class LogicContext(private val chooser: List<Chooser>) {
     fun execute(chatId: Long, callbackQuery: CallbackQuery, stepCode: StepCode): ExecuteStatus {
         return chooser
             .filter { it.isAvailableForCurrentStep(stepCode) }
-            .filter { it.isPermitted(chatId) }
             .map { (it as CallbackChooser).execute(chatId = chatId, callbackQuery = callbackQuery) }
             .first()
     }

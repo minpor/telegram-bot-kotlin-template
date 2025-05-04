@@ -31,7 +31,7 @@ class MessageService(
     ) {
         when (stepCode.type) {
             SIMPLE_TEXT -> telegramClient.execute(simpleTextMessage(chatId, stepCode))
-            INLINE_KEYBOARD_MARKUP -> telegramClient.sendInlineKeyboardMarkup(chatId, stepCode)
+            INLINE_KEYBOARD_MARKUP -> telegramClient.execute(sendInlineKeyboardMarkup(chatId, stepCode))
         }
 
         if (!stepCode.botPause) {
@@ -55,15 +55,16 @@ class MessageService(
         return sendMessage
     }
 
-    private fun TelegramClient.sendInlineKeyboardMarkup(chatId: Long, stepCode: StepCode) {
+    private fun sendInlineKeyboardMarkup(chatId: Long, stepCode: StepCode): SendMessage {
         val inlineKeyboardMarkup: InlineKeyboardMarkup
         val messageText: String
 
-        val inlineKeyboardMarkupDto = messageContext.getInlineKeyboardMarkupDto(chatId, stepCode)!!
+        val inlineKeyboardMarkupDto = messageContext.getInlineKeyboardMarkupDto(chatId, stepCode)
+            ?: return simpleTextMessage(chatId, stepCode)
         messageText = inlineKeyboardMarkupDto.message
         inlineKeyboardMarkup = inlineKeyboardMarkupDto.inlineButtons.getInlineKeyboardMarkup()
 
-        this.execute(sendMessageWithMarkup(chatId, messageText, inlineKeyboardMarkup))
+        return sendMessageWithMarkup(chatId, messageText, inlineKeyboardMarkup)
     }
 
     private fun sendMessageWithMarkup(

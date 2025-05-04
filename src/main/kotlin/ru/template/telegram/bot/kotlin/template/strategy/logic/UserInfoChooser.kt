@@ -8,10 +8,6 @@ import ru.template.telegram.bot.kotlin.template.repository.UsersRepository
 class UserInfoChooser(private val usersRepository: UsersRepository) : MessageChooser {
 
 
-    override fun isPermitted(chatId: Long): Boolean {
-        return true
-    }
-
     override fun execute(chatId: Long, message: Message) {
         usersRepository.updateText(chatId, message.text)
     }

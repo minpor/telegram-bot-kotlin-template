@@ -12,8 +12,4 @@ class ButtonRequestChooser(private val usersRepository: UsersRepository) : Callb
         usersRepository.updateAccept(chatId, callbackQuery.data)
         return ExecuteStatus.FINAL
     }
-
-    override fun isPermitted(chatId: Long): Boolean {
-        return true
-    }
 }

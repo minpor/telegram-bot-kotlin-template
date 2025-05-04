@@ -20,4 +20,8 @@ class ButtonResponseMessage(
             ButtonResponseDto(chatId = chatId, text = user?.text, accept = user?.accept)
         )
     }
+
+    override fun isPermitted(chatId: Long): Boolean {
+        return true
+    }
 }
