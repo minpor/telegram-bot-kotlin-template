@@ -26,7 +26,6 @@ class ButtonRequestMessage<T : DataModel>(
         val accept = data!!.accept
         return listOf(
             MarkupDataDto(0, accept.first()),
-            MarkupDataDto(0, accept.first()),
             MarkupDataDto(1, accept.last()),
             MarkupDataDto(1, accept.last())
         )
