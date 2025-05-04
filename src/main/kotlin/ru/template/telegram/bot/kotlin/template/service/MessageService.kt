@@ -10,7 +10,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKe
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardRow
 import org.telegram.telegrambots.meta.generics.TelegramClient
 import ru.template.telegram.bot.kotlin.template.dto.MarkupDataDto
-import ru.template.telegram.bot.kotlin.template.dto.markup.DataModel
+import ru.template.telegram.bot.kotlin.template.strategy.dto.DataModel
 import ru.template.telegram.bot.kotlin.template.enums.StepCode
 import ru.template.telegram.bot.kotlin.template.enums.StepType.*
 import ru.template.telegram.bot.kotlin.template.event.TelegramStepMessageEvent

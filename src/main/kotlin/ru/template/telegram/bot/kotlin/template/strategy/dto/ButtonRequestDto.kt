@@ -1,4 +1,4 @@
-package ru.template.telegram.bot.kotlin.template.dto.markup
+package ru.template.telegram.bot.kotlin.template.strategy.dto
 
 class ButtonRequestDto(
     val accept: List<String>

@@ -1,7 +1,7 @@
 package ru.template.telegram.bot.kotlin.template.strategy.message
 
 import org.springframework.stereotype.Component
-import ru.template.telegram.bot.kotlin.template.dto.markup.DataModel
+import ru.template.telegram.bot.kotlin.template.strategy.dto.DataModel
 
 @Component
 class AccessMessage : Message<DataModel> {

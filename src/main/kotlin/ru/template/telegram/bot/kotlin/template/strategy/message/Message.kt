@@ -1,6 +1,6 @@
 package ru.template.telegram.bot.kotlin.template.strategy.message
 
-import ru.template.telegram.bot.kotlin.template.dto.markup.DataModel
+import ru.template.telegram.bot.kotlin.template.strategy.dto.DataModel
 import ru.template.telegram.bot.kotlin.template.enums.StepCode
 import ru.template.telegram.bot.kotlin.template.utils.CommonUtils.checkCurrentStep
 
