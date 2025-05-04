@@ -2,7 +2,7 @@ import nu.studer.gradle.jooq.JooqEdition
 import nu.studer.gradle.jooq.JooqGenerate
 
 val postgresVersion = "42.7.2"
-val telegramBotVersion = "7.10.0"
+val telegramBotVersion = "8.3.0"
 
 plugins {
     id("nu.studer.jooq") version("9.0")
@@ -18,7 +18,7 @@ version = "1.0.0"
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(17) // gradle 8.8
+        languageVersion = JavaLanguageVersion.of(21) // gradle 8.8
     }
 }
 
@@ -44,15 +44,18 @@ val flywayMigration = configurations.create("flywayMigration")
 flyway {
     validateOnMigrate = false
     configurations = arrayOf("flywayMigration")
-    url = "jdbc:postgresql://localhost:5432/kotlin_template"
-    user = "postgres"
-    password = "postgres"
+    url = (System.getenv("SPRING_DATASOURCE_URL") ?: "jdbc:postgresql://localhost:5432/kotlin_template")
+    user = (System.getenv("SPRING_DATASOURCE_USERNAME") ?: "postgres")
+    password = (System.getenv("SPRING_DATASOURCE_PASSWORD") ?: "postgres")
+    cleanDisabled = false
 }
 
 dependencies {
     flywayMigration("org.postgresql:postgresql:$postgresVersion")
     jooqGenerator("org.postgresql:postgresql:$postgresVersion")
     runtimeOnly("org.postgresql:postgresql")
+
+    implementation("org.flywaydb:flyway-database-postgresql")
 
     implementation("org.springframework.boot:spring-boot-starter")
     implementation("org.springframework.boot:spring-boot-starter-jooq")
