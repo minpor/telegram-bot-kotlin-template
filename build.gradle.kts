@@ -51,6 +51,7 @@ flyway {
 }
 
 dependencies {
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
     flywayMigration("org.postgresql:postgresql:$postgresVersion")
     jooqGenerator("org.postgresql:postgresql:$postgresVersion")
     runtimeOnly("org.postgresql:postgresql")

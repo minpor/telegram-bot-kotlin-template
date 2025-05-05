@@ -6,7 +6,7 @@ object CommonUtils {
 
     val REGEXP = "(?<=.)[A-Z]".toRegex()
 
-    fun Any.checkCurrentStep(stepCode: StepCode, removeSuffix: String): Boolean {
+    fun Any.currentStepCode(removeSuffix: String): StepCode {
         val stepCodeName = this
             .javaClass
             .simpleName
@@ -14,6 +14,7 @@ object CommonUtils {
             .replace(REGEXP, "_$0")
             .uppercase()
 
-        return StepCode.valueOf(stepCodeName) == stepCode
+        return StepCode.valueOf(stepCodeName)
     }
+
 }

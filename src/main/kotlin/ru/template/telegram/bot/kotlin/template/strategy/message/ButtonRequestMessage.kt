@@ -13,7 +13,7 @@ class ButtonRequestMessage<T : DataModel>(
 ) : Button<ButtonRequestDto> {
 
     override fun message(chatId: Long, data: ButtonRequestDto?): String {
-        return messageWriter.process(StepCode.BUTTON_REQUEST, data)
+        return messageWriter.process(StepCode.BUTTON_REQUEST)
     }
 
     override fun isPermitted(chatId: Long): Boolean {
