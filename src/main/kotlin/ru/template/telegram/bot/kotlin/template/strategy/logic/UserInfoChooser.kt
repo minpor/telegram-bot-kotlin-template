@@ -7,7 +7,6 @@ import ru.template.telegram.bot.kotlin.template.repository.UsersRepository
 @Component
 class UserInfoChooser(private val usersRepository: UsersRepository) : MessageChooser {
 
-
     override fun execute(chatId: Long, message: Message) {
         usersRepository.updateText(chatId, message.text)
     }

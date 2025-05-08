@@ -6,10 +6,15 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto
 import org.telegram.telegrambots.meta.api.objects.InputFile
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardRow
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow
 import org.telegram.telegrambots.meta.generics.TelegramClient
 import ru.template.telegram.bot.kotlin.template.dto.MarkupDataDto
+import ru.template.telegram.bot.kotlin.template.dto.ReplyMarkupDto
 import ru.template.telegram.bot.kotlin.template.enums.StepCode
 import ru.template.telegram.bot.kotlin.template.enums.StepType.SEND_PHOTO
 import ru.template.telegram.bot.kotlin.template.enums.StepType.SEND_MESSAGE
@@ -59,13 +64,20 @@ class MessageService(
     }
 
     private fun sendMessage(chatId: Long, stepCode: StepCode): SendMessage {
-        val message = messageContext.getMessage(chatId, stepCode) ?: throw IllegalStateException("message is null")
+        val message = messageContext.getMessage(chatId, stepCode)
+            ?: throw IllegalStateException("message is null")
+
+        val markup = message.inlineButtons.getInlineKeyboardMarkup()
+            .takeIf { it.keyboard.isNotEmpty() } ?: message.replyButtons.getReplyMarkup()
+
         val sendMessage = SendMessage.builder()
             .chatId(chatId)
             .text(message.message)
-            .replyMarkup(message.inlineButtons.getInlineKeyboardMarkup())
+            .replyMarkup(markup)
             .build()
+
         sendMessage.enableHtml(true)
+
         return sendMessage
     }
 
@@ -85,5 +97,17 @@ class MessageService(
         }
         val rows = inlineKeyboardButtons.map { InlineKeyboardRow(it) }
         return InlineKeyboardMarkup(rows)
+    }
+
+    private fun List<ReplyMarkupDto>.getReplyMarkup(): ReplyKeyboard {
+        val keyboardRows = this.map { rmd ->
+            KeyboardRow(
+                KeyboardButton.builder()
+                    .text(rmd.text)
+                    .requestContact(rmd.requestContact)
+                    .build()
+            )
+        }
+        return ReplyKeyboardMarkup.builder().keyboard(keyboardRows).build()
     }
 }

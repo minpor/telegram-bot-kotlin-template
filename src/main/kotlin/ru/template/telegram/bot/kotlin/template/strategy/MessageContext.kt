@@ -21,8 +21,9 @@ class MessageContext<T : DataModel>(
             ?.let {
                 val data = getData(chatId, stepCode)
                 MessageModelDto(
-                    it.message(chatId, data),
-                    it.inlineButtons(chatId, data)
+                    message = it.message(chatId, data),
+                    inlineButtons = it.inlineButtons(chatId, data),
+                    replyButtons = it.replyButton(chatId, data)
                 )
             }
     }

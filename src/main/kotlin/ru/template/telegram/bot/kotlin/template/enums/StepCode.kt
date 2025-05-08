@@ -7,7 +7,8 @@ enum class StepCode(val type: StepType, val botPause: Boolean) {
     BUTTON_RESPONSE(StepType.SEND_MESSAGE, true),
     ACCESS(StepType.SEND_MESSAGE, true),
     PHOTO(StepType.SEND_PHOTO, true),
-    PHOTO_BUTTON(StepType.SEND_PHOTO, true)
+    PHOTO_BUTTON(StepType.SEND_PHOTO, true),
+    CONTACT(StepType.SEND_MESSAGE, true)
 }
 
 enum class StepType {

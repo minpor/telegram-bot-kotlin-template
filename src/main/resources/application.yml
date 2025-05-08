@@ -10,4 +10,4 @@ spring:
     password: postgres
 logging:
   level:
-    root: debug
+    root: info
