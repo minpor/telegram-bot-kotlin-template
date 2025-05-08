@@ -5,10 +5,13 @@ enum class StepCode(val type: StepType, val botPause: Boolean) {
     USER_INFO(StepType.SIMPLE_TEXT, true),
     BUTTON_REQUEST(StepType.INLINE_KEYBOARD_MARKUP, true),
     BUTTON_RESPONSE(StepType.SIMPLE_TEXT, true),
-    ACCESS(StepType.SIMPLE_TEXT, true)
+    ACCESS(StepType.SIMPLE_TEXT, true),
+    PHOTO(StepType.PHOTO_TEXT, true),
+    PHOTO_BUTTON(StepType.PHOTO_TEXT, true)
 }
 
 enum class StepType {
     SIMPLE_TEXT,
+    PHOTO_TEXT,
     INLINE_KEYBOARD_MARKUP
 }

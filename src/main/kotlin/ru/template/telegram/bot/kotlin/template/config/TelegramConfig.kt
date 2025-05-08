@@ -9,12 +9,14 @@ import ru.template.telegram.bot.kotlin.template.properties.BotProperty
 import ru.template.telegram.bot.kotlin.template.strategy.dto.DataModel
 import ru.template.telegram.bot.kotlin.template.strategy.message.Button
 import ru.template.telegram.bot.kotlin.template.strategy.message.Message
+import ru.template.telegram.bot.kotlin.template.strategy.message.Photo
 
 @Configuration
 class TelegramConfig<T : DataModel>(
     private val botProperty: BotProperty,
-    private val message: List<Message<T>>,
-    private val button: List<Button<T>>
+    private val messages: List<Message<T>>,
+    private val buttons: List<Button<T>>,
+    private val photo: List<Photo<T>>
 ) {
 
     @Bean
@@ -24,13 +26,19 @@ class TelegramConfig<T : DataModel>(
 
     @Bean("message")
     fun telegramMessage(): Map<StepCode, Message<T>> {
-        val associate = message.associateBy { it.classStepCode() }
+        val associate = messages.associateBy { it.classStepCode() }
         return associate
     }
 
     @Bean("button")
     fun telegramButton(): Map<StepCode, Button<T>> {
-        val associate = button.associateBy { it.classStepCode() }
+        val associate = buttons.associateBy { it.classStepCode() }
+        return associate
+    }
+
+    @Bean("photo")
+    fun telegramPhoto(): Map<StepCode, Photo<T>> {
+        val associate = photo.associateBy { it.classStepCode() }
         return associate
     }
 

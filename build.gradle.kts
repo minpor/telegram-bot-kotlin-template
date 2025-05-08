@@ -51,7 +51,6 @@ flyway {
 }
 
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-actuator")
     flywayMigration("org.postgresql:postgresql:$postgresVersion")
     jooqGenerator("org.postgresql:postgresql:$postgresVersion")
     runtimeOnly("org.postgresql:postgresql")
@@ -61,6 +60,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter")
     implementation("org.springframework.boot:spring-boot-starter-jooq")
     implementation("org.springframework.boot:spring-boot-starter-freemarker")
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-web")
 
     implementation("org.telegram:telegrambots-springboot-longpolling-starter:$telegramBotVersion")
