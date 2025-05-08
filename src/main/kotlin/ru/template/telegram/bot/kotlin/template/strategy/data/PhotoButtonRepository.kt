@@ -9,7 +9,7 @@ class PhotoButtonRepository : AbstractRepository<PhotoButtonDto>() {
     override fun getData(chatId: Long): PhotoButtonDto {
         return PhotoButtonDto(
             chatId,
-            "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://google.com",
+            "https://api.dub.co/qr?url=google.com",
             listOf("test1", "test2")
         )
     }

@@ -10,7 +10,7 @@ import ru.template.telegram.bot.kotlin.template.enums.StepCode
 @Component
 class ButtonRequestMessage<T : DataModel>(
     private val messageWriter: MessageWriter
-) : Button<ButtonRequestDto> {
+) : Message<ButtonRequestDto> {
 
     override fun message(chatId: Long, data: ButtonRequestDto?): String {
         return messageWriter.process(StepCode.BUTTON_REQUEST)

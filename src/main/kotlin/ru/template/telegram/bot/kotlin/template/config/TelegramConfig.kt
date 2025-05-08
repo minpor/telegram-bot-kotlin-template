@@ -7,7 +7,6 @@ import org.telegram.telegrambots.meta.generics.TelegramClient
 import ru.template.telegram.bot.kotlin.template.enums.StepCode
 import ru.template.telegram.bot.kotlin.template.properties.BotProperty
 import ru.template.telegram.bot.kotlin.template.strategy.dto.DataModel
-import ru.template.telegram.bot.kotlin.template.strategy.message.Button
 import ru.template.telegram.bot.kotlin.template.strategy.message.Message
 import ru.template.telegram.bot.kotlin.template.strategy.message.Photo
 
@@ -15,8 +14,7 @@ import ru.template.telegram.bot.kotlin.template.strategy.message.Photo
 class TelegramConfig<T : DataModel>(
     private val botProperty: BotProperty,
     private val messages: List<Message<T>>,
-    private val buttons: List<Button<T>>,
-    private val photo: List<Photo<T>>
+    private val photo: List<Photo<T>>,
 ) {
 
     @Bean
@@ -24,19 +22,13 @@ class TelegramConfig<T : DataModel>(
         return OkHttpTelegramClient(botProperty.token)
     }
 
-    @Bean("message")
+    @Bean
     fun telegramMessage(): Map<StepCode, Message<T>> {
         val associate = messages.associateBy { it.classStepCode() }
         return associate
     }
 
-    @Bean("button")
-    fun telegramButton(): Map<StepCode, Button<T>> {
-        val associate = buttons.associateBy { it.classStepCode() }
-        return associate
-    }
-
-    @Bean("photo")
+    @Bean
     fun telegramPhoto(): Map<StepCode, Photo<T>> {
         val associate = photo.associateBy { it.classStepCode() }
         return associate

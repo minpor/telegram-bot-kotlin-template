@@ -8,3 +8,6 @@ spring:
     url: jdbc:postgresql://localhost:5432/kotlin_template
     username: postgres
     password: postgres
+logging:
+  level:
+    root: debug

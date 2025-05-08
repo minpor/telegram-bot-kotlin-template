@@ -12,7 +12,7 @@ import ru.template.telegram.bot.kotlin.template.strategy.dto.PhotoDto
 class PhotoMessage(
     private val messageWriter: MessageWriter,
     private val fileService: FileService
-): Photo<PhotoDto> {
+) : Photo<PhotoDto> {
 
     override fun message(
         chatId: Long,
@@ -26,7 +26,9 @@ class PhotoMessage(
     }
 
     override fun file(data: PhotoDto?): ByteArrayInputStream? {
-        return data?.url?.let { fileService.getFileFromUrl(data.url) }
+        return data?.url?.let {
+            fileService.getFileFromUrl(data.url)
+        }
     }
 
     override fun inlineButtons(
