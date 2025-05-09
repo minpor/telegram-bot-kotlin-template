@@ -7,6 +7,8 @@ import org.telegram.telegrambots.meta.generics.TelegramClient
 import ru.template.telegram.bot.kotlin.template.enums.StepCode
 import ru.template.telegram.bot.kotlin.template.properties.BotProperty
 import ru.template.telegram.bot.kotlin.template.strategy.dto.DataModel
+import ru.template.telegram.bot.kotlin.template.strategy.logic.CallbackChooser
+import ru.template.telegram.bot.kotlin.template.strategy.logic.MessageChooser
 import ru.template.telegram.bot.kotlin.template.strategy.message.Message
 import ru.template.telegram.bot.kotlin.template.strategy.message.Photo
 
@@ -15,6 +17,8 @@ class TelegramConfig<T : DataModel>(
     private val botProperty: BotProperty,
     private val messages: List<Message<T>>,
     private val photo: List<Photo<T>>,
+    private val callbackChooser: List<CallbackChooser>,
+    private val messageChooser: List<MessageChooser>
 ) {
 
     @Bean
@@ -24,14 +28,22 @@ class TelegramConfig<T : DataModel>(
 
     @Bean
     fun telegramMessage(): Map<StepCode, Message<T>> {
-        val associate = messages.associateBy { it.classStepCode() }
-        return associate
+        return messages.associateBy { it.classStepCode() }
     }
 
     @Bean
     fun telegramPhoto(): Map<StepCode, Photo<T>> {
-        val associate = photo.associateBy { it.classStepCode() }
-        return associate
+        return photo.associateBy { it.classStepCode() }
+    }
+
+    @Bean
+    fun telegramMessageChooser(): Map<StepCode, MessageChooser> {
+        return messageChooser.associateBy { it.classStepCode() }
+    }
+
+    @Bean
+    fun telegramCallbackChooser(): Map<StepCode, CallbackChooser> {
+        return callbackChooser.associateBy { it.classStepCode() }
     }
 
 }

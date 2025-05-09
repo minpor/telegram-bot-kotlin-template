@@ -7,5 +7,5 @@ enum class CommandCode(val command: String, val desc: String) {
     ACCESS("access", "access check"),
     CONTACT("contact", "contact check"),
     PHOTO("photo", "photo test"),
-    PHOTO_BUTTON("photo_button", "photo test with button"),
+    PHOTO_BUTTON("photo_button", "photo test with button")
 }

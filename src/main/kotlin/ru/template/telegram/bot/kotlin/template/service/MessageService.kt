@@ -8,6 +8,7 @@ import org.telegram.telegrambots.meta.api.objects.InputFile
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardRemove
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardRow
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton
@@ -55,11 +56,14 @@ class MessageService(
             messageContext.getPhotoMessage(chatId, stepCode)
                 ?: throw IllegalArgumentException("photo data is empty")
 
+        val replyMarkup = photoMessage.inlineButtons
+            .takeIf { it.isNotEmpty() }?.getInlineKeyboardMarkup()?: ReplyKeyboardRemove(true)
+
         return SendPhoto.builder()
             .chatId(chatId)
             .caption(photoMessage.message)
             .photo(InputFile(photoMessage.file, "file"))
-            .replyMarkup(photoMessage.inlineButtons.getInlineKeyboardMarkup())
+            .replyMarkup(replyMarkup)
             .build()
     }
 
@@ -68,7 +72,9 @@ class MessageService(
             ?: throw IllegalStateException("message is null")
 
         val markup = message.inlineButtons.getInlineKeyboardMarkup()
-            .takeIf { it.keyboard.isNotEmpty() } ?: message.replyButtons.getReplyMarkup()
+            .takeIf { it.keyboard.isNotEmpty() }
+            ?: message.replyButtons.takeIf { it.isNotEmpty() }?.getReplyMarkup()
+            ?: ReplyKeyboardRemove(true)
 
         val sendMessage = SendMessage.builder()
             .chatId(chatId)

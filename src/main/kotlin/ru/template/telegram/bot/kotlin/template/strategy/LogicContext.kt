@@ -10,20 +10,18 @@ import ru.template.telegram.bot.kotlin.template.strategy.logic.Chooser
 import ru.template.telegram.bot.kotlin.template.strategy.logic.MessageChooser
 
 @Component
-class LogicContext(private val chooser: List<Chooser>) {
+class LogicContext(
+    private val telegramCallbackChooser: Map<StepCode, CallbackChooser>,
+    private val telegramMessageChooser: Map<StepCode, MessageChooser>
+) {
 
     fun execute(chatId: Long, message: Message, stepCode: StepCode) {
-        chooser
-            .filter { it.isAvailableForCurrentStep(stepCode) }
-            .forEach {
-                (it as MessageChooser).execute(chatId = chatId, message = message)
-            }
+        telegramMessageChooser[stepCode]?.execute(chatId = chatId, message = message)
     }
 
     fun execute(chatId: Long, callbackQuery: CallbackQuery, stepCode: StepCode): ExecuteStatus {
-        return chooser
-            .filter { it.isAvailableForCurrentStep(stepCode) }
-            .map { (it as CallbackChooser).execute(chatId = chatId, callbackQuery = callbackQuery) }
-            .first()
+        return telegramCallbackChooser[stepCode]
+            ?.execute(chatId = chatId, callbackQuery = callbackQuery)
+            ?: throw IllegalStateException("Callback not found")
     }
 }

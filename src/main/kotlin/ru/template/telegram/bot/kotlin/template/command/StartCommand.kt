@@ -17,19 +17,16 @@ class StartCommand(
     private val applicationEventPublisher: ApplicationEventPublisher
 ) : BotCommand(CommandCode.START.command, CommandCode.START.desc) {
 
-    companion object {
-        private val START_CODE = StepCode.START
-    }
 
     override fun execute(telegramClient: TelegramClient, user: User, chat: Chat, arguments: Array<out String>) {
         val chatId = chat.id
 
         if (usersRepository.isUserExist(chatId)) {
-            usersRepository.updateUserStep(chatId, START_CODE)
+            usersRepository.updateUserStep(chatId, StepCode.START)
         } else usersRepository.createUser(chatId)
 
         applicationEventPublisher.publishEvent(
-            TelegramStepMessageEvent(chatId = chatId, stepCode = START_CODE)
+            TelegramStepMessageEvent(chatId = chatId, stepCode = StepCode.START)
         )
     }
 

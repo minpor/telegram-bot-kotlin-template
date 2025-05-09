@@ -17,18 +17,13 @@ class ButtonRequestCommand(
     private val applicationEventPublisher: ApplicationEventPublisher
 ) : BotCommand(CommandCode.BUTTON.command, CommandCode.BUTTON.desc) {
 
-    companion object {
-        private val BUTTON_REQUEST = StepCode.BUTTON_REQUEST
-    }
-
-
     override fun execute(telegramClient: TelegramClient, user: User, chat: Chat, arguments: Array<out String>) {
         val chatId = chat.id
 
-        usersRepository.updateUserStep(chatId, BUTTON_REQUEST)
+        usersRepository.updateUserStep(chatId, StepCode.BUTTON_REQUEST)
 
         applicationEventPublisher.publishEvent(
-            TelegramStepMessageEvent(chatId = chatId, stepCode = BUTTON_REQUEST)
+            TelegramStepMessageEvent(chatId = chatId, stepCode = StepCode.BUTTON_REQUEST)
         )
     }
 

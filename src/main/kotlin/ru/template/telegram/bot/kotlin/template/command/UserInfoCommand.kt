@@ -17,17 +17,13 @@ class UserInfoCommand(
     private val applicationEventPublisher: ApplicationEventPublisher
 ) : BotCommand(CommandCode.USER_INFO.command, CommandCode.USER_INFO.desc) {
 
-    companion object {
-        private val USER_INFO = StepCode.USER_INFO
-    }
-
     override fun execute(telegramClient: TelegramClient, user: User, chat: Chat, arguments: Array<out String>) {
         val chatId = chat.id
 
-        usersRepository.updateUserStep(chatId, USER_INFO)
+        usersRepository.updateUserStep(chatId, StepCode.USER_INFO)
 
         applicationEventPublisher.publishEvent(
-            TelegramStepMessageEvent(chatId = chatId, stepCode = USER_INFO)
+            TelegramStepMessageEvent(chatId = chatId, stepCode = StepCode.USER_INFO)
         )
     }
 

@@ -17,17 +17,13 @@ class AccessCommand(
     private val applicationEventPublisher: ApplicationEventPublisher
 ) :  BotCommand(CommandCode.ACCESS.command, CommandCode.ACCESS.desc) {
 
-    companion object {
-        private val ACCESS = StepCode.ACCESS
-    }
-
     override fun execute(telegramClient: TelegramClient, user: User, chat: Chat, arguments: Array<out String>) {
         val chatId = chat.id
 
-        usersRepository.updateUserStep(chatId, ACCESS)
+        usersRepository.updateUserStep(chatId,  StepCode.ACCESS)
 
         applicationEventPublisher.publishEvent(
-            TelegramStepMessageEvent(chatId = chatId, stepCode = ACCESS)
+            TelegramStepMessageEvent(chatId = chatId, stepCode =  StepCode.ACCESS)
         )
     }
 }
