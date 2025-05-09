@@ -8,7 +8,7 @@ import ru.template.telegram.bot.kotlin.template.strategy.dto.DataModel
 import ru.template.telegram.bot.kotlin.template.utils.CommonUtils.currentStepCode
 
 @Component
-abstract class SendMessage<T: DataModel?>(val messageWriter: MessageWriter) {
+abstract class AbstractSendMessage<T: DataModel?>(private val messageWriter: MessageWriter) {
 
     fun classStepCode() = this.currentStepCode("Message")
 

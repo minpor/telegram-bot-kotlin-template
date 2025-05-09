@@ -7,8 +7,7 @@ import ru.template.telegram.bot.kotlin.template.strategy.dto.ButtonRequestDto
 import ru.template.telegram.bot.kotlin.template.strategy.dto.DataModel
 
 @Component
-class ButtonRequestMessage<T : DataModel>(messageWriter: MessageWriter) : SendMessage<ButtonRequestDto>(messageWriter) {
-
+class ButtonRequestMessage<T : DataModel>(messageWriter: MessageWriter) : AbstractSendMessage<ButtonRequestDto>(messageWriter) {
 
     override fun inlineButtons(chatId: Long, data: ButtonRequestDto?): List<MarkupDataDto> {
         val accept = data!!.accept

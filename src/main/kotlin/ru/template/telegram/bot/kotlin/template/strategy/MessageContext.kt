@@ -5,13 +5,13 @@ import ru.template.telegram.bot.kotlin.template.dto.MessageModelDto
 import ru.template.telegram.bot.kotlin.template.enums.StepCode
 import ru.template.telegram.bot.kotlin.template.strategy.data.AbstractRepository
 import ru.template.telegram.bot.kotlin.template.strategy.dto.DataModel
-import ru.template.telegram.bot.kotlin.template.strategy.message.SendMessage
-import ru.template.telegram.bot.kotlin.template.strategy.message.SendPhoto
+import ru.template.telegram.bot.kotlin.template.strategy.message.AbstractSendMessage
+import ru.template.telegram.bot.kotlin.template.strategy.message.AbstractSendPhoto
 
 @Component
 class MessageContext<T : DataModel>(
-    private val sendMessages: Map<StepCode, SendMessage<T>>,
-    private val sendPhotos: Map<StepCode, SendPhoto<T>>,
+    private val sendMessages: Map<StepCode, AbstractSendMessage<T>>,
+    private val sendPhotos: Map<StepCode, AbstractSendPhoto<T>>,
     private val abstractRepository: List<AbstractRepository<T>>
 ) {
 

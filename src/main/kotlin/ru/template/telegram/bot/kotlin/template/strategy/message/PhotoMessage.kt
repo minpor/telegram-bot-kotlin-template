@@ -10,7 +10,7 @@ import ru.template.telegram.bot.kotlin.template.strategy.dto.PhotoDto
 class PhotoMessage(
     messageWriter: MessageWriter,
     private val fileService: FileService
-) : SendPhoto<PhotoDto>(messageWriter) {
+) : AbstractSendPhoto<PhotoDto>(messageWriter) {
 
     override fun file(data: PhotoDto?): ByteArrayInputStream? {
         return data?.url?.let {

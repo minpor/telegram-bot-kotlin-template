@@ -11,7 +11,7 @@ import ru.template.telegram.bot.kotlin.template.strategy.dto.PhotoButtonDto
 class PhotoButtonMessage(
     messageWriter: MessageWriter,
     private val fileService: FileService
-) : SendPhoto<PhotoButtonDto>(messageWriter) {
+) : AbstractSendPhoto<PhotoButtonDto>(messageWriter) {
 
     override fun file(data: PhotoButtonDto?): ByteArrayInputStream? {
         return data?.url?.let { fileService.getFileFromUrl(it) }

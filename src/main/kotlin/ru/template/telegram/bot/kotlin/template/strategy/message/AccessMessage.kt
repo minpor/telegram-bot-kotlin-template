@@ -5,7 +5,7 @@ import ru.template.telegram.bot.kotlin.template.component.MessageWriter
 import ru.template.telegram.bot.kotlin.template.strategy.dto.DataModel
 
 @Component
-class AccessMessage(messageWriter: MessageWriter) : SendMessage<DataModel>(messageWriter) {
+class AccessMessage(messageWriter: MessageWriter) : AbstractSendMessage<DataModel>(messageWriter) {
 
     override fun message(data: DataModel?): String {
         return "" // not use, this is only for test isPermitted

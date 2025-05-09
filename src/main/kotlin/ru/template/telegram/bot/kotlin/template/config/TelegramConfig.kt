@@ -9,14 +9,14 @@ import ru.template.telegram.bot.kotlin.template.properties.BotProperty
 import ru.template.telegram.bot.kotlin.template.strategy.dto.DataModel
 import ru.template.telegram.bot.kotlin.template.strategy.logic.CallbackChooser
 import ru.template.telegram.bot.kotlin.template.strategy.logic.MessageChooser
-import ru.template.telegram.bot.kotlin.template.strategy.message.SendMessage
-import ru.template.telegram.bot.kotlin.template.strategy.message.SendPhoto
+import ru.template.telegram.bot.kotlin.template.strategy.message.AbstractSendMessage
+import ru.template.telegram.bot.kotlin.template.strategy.message.AbstractSendPhoto
 
 @Configuration
 class TelegramConfig<T : DataModel>(
     private val botProperty: BotProperty,
-    private val sendMessages: List<SendMessage<T>>,
-    private val sendPhoto: List<SendPhoto<T>>,
+    private val sendMessages: List<AbstractSendMessage<T>>,
+    private val sendPhoto: List<AbstractSendPhoto<T>>,
     private val callbackChooser: List<CallbackChooser>,
     private val messageChooser: List<MessageChooser>
 ) {
@@ -27,12 +27,12 @@ class TelegramConfig<T : DataModel>(
     }
 
     @Bean
-    fun sendMessages(): Map<StepCode, SendMessage<T>> {
+    fun sendMessages(): Map<StepCode, AbstractSendMessage<T>> {
         return sendMessages.associateBy { it.classStepCode() }
     }
 
     @Bean
-    fun sendPhotos(): Map<StepCode, SendPhoto<T>> {
+    fun sendPhotos(): Map<StepCode, AbstractSendPhoto<T>> {
         return sendPhoto.associateBy { it.classStepCode() }
     }
 

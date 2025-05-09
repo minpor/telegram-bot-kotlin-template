@@ -5,4 +5,4 @@ import ru.template.telegram.bot.kotlin.template.component.MessageWriter
 import ru.template.telegram.bot.kotlin.template.strategy.dto.UserInfoDto
 
 @Component
-class UserInfoMessage(messageWriter: MessageWriter) : SendMessage<UserInfoDto>(messageWriter)
+class UserInfoMessage(messageWriter: MessageWriter) : AbstractSendMessage<UserInfoDto>(messageWriter)

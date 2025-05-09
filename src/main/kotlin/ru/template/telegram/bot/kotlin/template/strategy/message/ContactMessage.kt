@@ -6,7 +6,7 @@ import ru.template.telegram.bot.kotlin.template.dto.ReplyMarkupDto
 import ru.template.telegram.bot.kotlin.template.strategy.dto.ContactDto
 
 @Component
-class ContactMessage(messageWriter: MessageWriter) : SendMessage<ContactDto>(messageWriter) {
+class ContactMessage(messageWriter: MessageWriter): AbstractSendMessage<ContactDto>(messageWriter) {
 
     override fun replyButtons(
         chatId: Long,
