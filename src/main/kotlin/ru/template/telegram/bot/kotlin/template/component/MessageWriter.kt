@@ -1,24 +1,18 @@
 package ru.template.telegram.bot.kotlin.template.component
 
-import java.io.InputStreamReader
 import java.io.StringWriter
-import org.springframework.core.io.ResourceLoader
 import org.springframework.stereotype.Component
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer
 import ru.template.telegram.bot.kotlin.template.enums.StepCode
 
 @Component
 class MessageWriter(
-    private val freeMarkerConfigurer: FreeMarkerConfigurer,
-    private val resources: ResourceLoader
+    private val freeMarkerConfigurer: FreeMarkerConfigurer
 ) {
 
     fun process(stepCode: StepCode, freemarkerData: Any? = null): String {
-        val name = stepCode.name.lowercase().replace("_", "-")
-        return when (freemarkerData) {
-            null -> getMessage("$name.html")
-            else -> processed(mapOf("data" to freemarkerData), "$name.ftl")
-        }
+        val name = stepCode.name.lowercase()
+        return processed(freemarkerData?.let { mapOf("data" to it) }?: emptyMap(), "$name.ftl")
     }
 
     private fun processed(data: Map<String, Any>, templateName: String): String {
@@ -28,8 +22,4 @@ class MessageWriter(
         return output.toString()
     }
 
-    private fun getMessage(htmlFileName: String): String {
-        val resource = resources.getResource("classpath:message/simple/$htmlFileName")
-        return InputStreamReader(resource.inputStream).use { it.readText() }
-    }
 }

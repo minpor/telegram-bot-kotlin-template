@@ -5,36 +5,36 @@ import ru.template.telegram.bot.kotlin.template.dto.MessageModelDto
 import ru.template.telegram.bot.kotlin.template.enums.StepCode
 import ru.template.telegram.bot.kotlin.template.strategy.data.AbstractRepository
 import ru.template.telegram.bot.kotlin.template.strategy.dto.DataModel
-import ru.template.telegram.bot.kotlin.template.strategy.message.Message
-import ru.template.telegram.bot.kotlin.template.strategy.message.Photo
+import ru.template.telegram.bot.kotlin.template.strategy.message.SendMessage
+import ru.template.telegram.bot.kotlin.template.strategy.message.SendPhoto
 
 @Component
 class MessageContext<T : DataModel>(
-    private val telegramMessage: Map<StepCode, Message<T>>,
-    private val telegramPhoto: Map<StepCode, Photo<T>>,
+    private val sendMessages: Map<StepCode, SendMessage<T>>,
+    private val sendPhotos: Map<StepCode, SendPhoto<T>>,
     private val abstractRepository: List<AbstractRepository<T>>
 ) {
 
     fun getMessage(chatId: Long, stepCode: StepCode): MessageModelDto? {
-        return telegramMessage[stepCode]
+        return sendMessages[stepCode]
             ?.takeIf { it.isPermitted(chatId) }
             ?.let {
                 val data = getData(chatId, stepCode)
                 MessageModelDto(
-                    message = it.message(chatId, data),
+                    message = it.message(data),
                     inlineButtons = it.inlineButtons(chatId, data),
-                    replyButtons = it.replyButton(chatId, data)
+                    replyButtons = it.replyButtons(chatId, data)
                 )
             }
     }
 
     fun getPhotoMessage(chatId: Long, stepCode: StepCode): MessageModelDto? {
-        return telegramPhoto[stepCode]
+        return sendPhotos[stepCode]
             ?.takeIf { it.isPermitted(chatId) }
             ?.let {
                 val data = getData(chatId, stepCode)
                 MessageModelDto(
-                    message = it.message(chatId, data),
+                    message = it.message(data),
                     inlineButtons = it.inlineButtons(chatId, data),
                     file = it.file(data)
                 )

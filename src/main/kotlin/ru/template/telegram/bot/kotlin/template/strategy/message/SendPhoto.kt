@@ -1,8 +1,11 @@
 package ru.template.telegram.bot.kotlin.template.strategy.message
 
-import org.springframework.stereotype.Component
+import java.io.ByteArrayInputStream
 import ru.template.telegram.bot.kotlin.template.component.MessageWriter
 import ru.template.telegram.bot.kotlin.template.strategy.dto.DataModel
 
-@Component
-class StartMessage(messageWriter: MessageWriter) : SendMessage<DataModel>(messageWriter)
+abstract class SendPhoto<T: DataModel>(messageWriter: MessageWriter): SendMessage<T>(messageWriter) {
+
+    abstract fun file(data: T?): ByteArrayInputStream?
+
+}
