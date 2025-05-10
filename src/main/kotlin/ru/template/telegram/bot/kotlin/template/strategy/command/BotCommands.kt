@@ -1,4 +1,4 @@
-package ru.template.telegram.bot.kotlin.template.command
+package ru.template.telegram.bot.kotlin.template.strategy.command
 
 import org.telegram.telegrambots.meta.api.objects.User
 import org.telegram.telegrambots.meta.api.objects.chat.Chat

@@ -2,14 +2,13 @@ package ru.template.telegram.bot.kotlin.template.api
 
 import org.springframework.stereotype.Component
 import org.telegram.telegrambots.extensions.bots.commandbot.CommandLongPollingTelegramBot
-import org.telegram.telegrambots.extensions.bots.commandbot.commands.BotCommand
 import org.telegram.telegrambots.longpolling.BotSession
 import org.telegram.telegrambots.longpolling.interfaces.LongPollingUpdateConsumer
 import org.telegram.telegrambots.longpolling.starter.AfterBotRegistration
 import org.telegram.telegrambots.longpolling.starter.SpringLongPollingBot
 import org.telegram.telegrambots.meta.api.objects.Update
 import org.telegram.telegrambots.meta.generics.TelegramClient
-import ru.template.telegram.bot.kotlin.template.command.AbstractCommand
+import ru.template.telegram.bot.kotlin.template.strategy.command.AbstractCommand
 import ru.template.telegram.bot.kotlin.template.properties.BotProperty
 import ru.template.telegram.bot.kotlin.template.service.ReceiverService
 
