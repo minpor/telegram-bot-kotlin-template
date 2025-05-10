@@ -9,6 +9,7 @@ import org.telegram.telegrambots.longpolling.starter.AfterBotRegistration
 import org.telegram.telegrambots.longpolling.starter.SpringLongPollingBot
 import org.telegram.telegrambots.meta.api.objects.Update
 import org.telegram.telegrambots.meta.generics.TelegramClient
+import ru.template.telegram.bot.kotlin.template.command.AbstractCommand
 import ru.template.telegram.bot.kotlin.template.properties.BotProperty
 import ru.template.telegram.bot.kotlin.template.service.ReceiverService
 
@@ -17,7 +18,7 @@ import ru.template.telegram.bot.kotlin.template.service.ReceiverService
 class TelegramConsumer(
     private val botProperty: BotProperty,
     private val receiverService: ReceiverService,
-    commands: List<BotCommand>,
+    commands: List<AbstractCommand>,
     telegramClient: TelegramClient
 ) : SpringLongPollingBot, CommandLongPollingTelegramBot(telegramClient, true, { botProperty.username }) {
 

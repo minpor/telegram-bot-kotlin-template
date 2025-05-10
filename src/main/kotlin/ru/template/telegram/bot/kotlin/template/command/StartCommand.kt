@@ -14,20 +14,14 @@ import ru.template.telegram.bot.kotlin.template.repository.UsersRepository
 @Component
 class StartCommand(
     private val usersRepository: UsersRepository,
-    private val applicationEventPublisher: ApplicationEventPublisher
-) : BotCommand(CommandCode.START.command, CommandCode.START.desc) {
+    applicationEventPublisher: ApplicationEventPublisher
+) : AbstractCommand(CommandCode.START, usersRepository, applicationEventPublisher) {
 
-
-    override fun execute(telegramClient: TelegramClient, user: User, chat: Chat, arguments: Array<out String>) {
+    override fun prepare(user: User, chat: Chat, arguments: Array<out String>) {
         val chatId = chat.id
-
         if (usersRepository.isUserExist(chatId)) {
             usersRepository.updateUserStep(chatId, StepCode.START)
         } else usersRepository.createUser(chatId)
-
-        applicationEventPublisher.publishEvent(
-            TelegramStepMessageEvent(chatId = chatId, stepCode = StepCode.START)
-        )
     }
 
 

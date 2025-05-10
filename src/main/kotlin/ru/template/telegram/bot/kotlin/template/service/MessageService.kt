@@ -17,8 +17,8 @@ import org.telegram.telegrambots.meta.generics.TelegramClient
 import ru.template.telegram.bot.kotlin.template.dto.MarkupDataDto
 import ru.template.telegram.bot.kotlin.template.dto.ReplyMarkupDto
 import ru.template.telegram.bot.kotlin.template.enums.StepCode
-import ru.template.telegram.bot.kotlin.template.enums.StepType.SEND_PHOTO
 import ru.template.telegram.bot.kotlin.template.enums.StepType.SEND_MESSAGE
+import ru.template.telegram.bot.kotlin.template.enums.StepType.SEND_PHOTO
 import ru.template.telegram.bot.kotlin.template.event.TelegramStepMessageEvent
 import ru.template.telegram.bot.kotlin.template.strategy.MessageContext
 import ru.template.telegram.bot.kotlin.template.strategy.StepContext
